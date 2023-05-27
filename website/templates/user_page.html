@@ -1,0 +1,58 @@
+{% extends 'posts_template.html' %}
+{% block title %} {{ user_page.username }}'s profile {% endblock %}
+
+{% block header2 %}
+<header>
+    <div class="post-bg userinfo-bg">
+        <div class="row">
+            <div class="col-7">
+                <h1 class="text-secondary">{{ user_page.username }}</h1>
+            </div>
+            <div class="col-5" style="text-align:right">
+                <a href="/follow/{{ user_page.username }}">
+                    {% if not user_page.id == user.id %}
+                        {% if not user_page.id in user.followed|map(attribute = "id")|list %}
+
+                            <button class="btn btn-outline-primary" style="margin-top: 2%; text-decoration: none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16" style="margin-top: -3px">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                </svg>
+                                Follow
+                            </button>
+
+                        {% else %} 
+
+                            <button class="btn btn-outline-danger" style="margin-top: 2%; text-decoration: none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16" style="margin-top: -3px">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                </svg>
+                                Unfollow
+                            </button>
+
+                        {% endif %}
+                    {% else %}
+                    <a href="#"><button class="btn btn-outline-primary" style="margin-top: 2%; text-decoration: none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16" style="margin-top: -3px">
+                            <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                            <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                        </svg>
+                        Edit Profile
+                    </button></a>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+        <div class="col-12">
+        {% if not user_page.id == 1: %}
+        <p class="text-secondary"> {{ user_page.followed.all() | length }} Following  · {{ user_page.followers.all() | length }} Followers</p>
+        {% elif user_page.id == 1 %}
+        <p class="text-secondary"> {{ user_page.followed.all() | length }} Following  · 999999999 Followers</p>
+        {% endif %}
+
+</header>
+{% endblock %}
+{% block userpagecheck %}
+    {% if not user_page.posts %}
+        <h2 class=" text-secondary" style="text-align: center">User has not made any posts!</h2>
+    {% endif%}
+{% endblock%}

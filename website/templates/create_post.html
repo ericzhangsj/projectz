@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block extrahead %} 
+<style>
+    button-default {
+        padding: 20px;
+    }
+
+
+    body {
+        background-color: #edecec;
+    }
+
+    .content {
+        height: 200px;
+        width: 98%;
+        resize: none;
+        border-color: #999;
+        border-radius: 20px;
+        padding: 20px;
+        align-self: center; 
+        margin: 10px;
+    }
+
+    .maindiv {
+        background-color: white;
+        box-sizing: border-box;
+        padding: 30px;
+        border-radius: 30px;
+        text-align: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .border-outline{
+        border-radius: 23px; 
+        border:1px solid #999; height: 100%; width: 100%;
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        text-align: center;
+        border-style: dashed;
+        background-color: white;
+        color: #343434;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    
+</style>
+
+{% endblock %}
+{% block title%} Create Post {% endblock %}
+{% block content %}
+<br/>
+<div class="container text-body-secondary">
+    <h1>Create your own post!</h1> <br/>
+    <div class="row">
+        <div class="maindiv col-12" style="display: flex; align-items: center; justify-content: center; text-align: center; height: 380px;
+        outline-offset: -30px; padding: 15px;">
+            <button class="border-outline">
+                <form method="POST">
+                    <label class="text-secondary" style="font-size: x-large;">Upload your photo here!</label><br/>
+                    <label class="text-secondary" style="font-size: x-large;">(Not available yet)</label>
+                    <br/><br/>
+                </form>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="maindiv col-12">
+            <div class="row">
+                <div>
+                    <form method="POST">
+                        <div type="form-control">
+                            <textarea maxlength="100" placeholder="Title" id="my-textarea" class="content form-control" style="height: 67px;" name="title"></textarea>
+                            <textarea placeholder="What's on your mind?" id="my-textarea" class="content form-control" name="content"></textarea>
+                            <hr class="my-4">
+                            <div style="text-align: center;">
+                                <a href="/home" style="text-decoration: none;">
+                                    <button class="btn btn-outline-secondary me-2" style="padding-inline: 20%; padding-block: 10px;" type="button">Cancel</button>
+                                </a>
+                                <button class="btn btn-primary" style="padding-inline: 20%; padding-block: 10px; margin: 10px; text-decoration: none;" type="submit">Post</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

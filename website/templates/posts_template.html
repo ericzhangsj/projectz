@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+{% block extrahead2 %} {% endblock %}
+<style>
+
+
+
+    body {
+        background-color: #edecec;
+    }
+
+
+    .post-bg {
+        margin-inline: auto;
+        background-color: white;
+        padding-top: 20px;
+        padding-bottom: 7px;
+        padding-right: 20px;
+        padding-left:4%;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        max-width: 1000px;
+    }
+
+    /* Responsive layout - makes a one column layout instead of a two-column layout */
+    @media (max-width: 800px) {
+        .container {
+        flex-direction: column;
+    }
+  }
+
+    .title {
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: medium;
+    }
+
+    .delete-button {
+        padding: 0px;
+        padding-bottom: 4px;
+        padding-inline: 4px;
+        border: none;
+        bottom: 5px;
+        border-radius: 10px;
+        margin-right: 0px;
+    }
+
+    .icons {
+        margin-right: 5%;
+        color: grey;
+        text-decoration: none;
+        align-self: right;
+    }
+
+    .colstyle {
+        align-items: left;
+        margin-bottom: -5px;
+    }
+
+    .comments-input {
+        height: 40px;
+        width: 107%;
+        resize: none;
+        border-color: #999;
+        border-radius: 20px;
+        align-self: center; 
+        top: 50%;
+        padding-left: 20px;
+    }
+
+    header {
+        grid-area: header;
+        padding-inline: 2.3%;
+        margin-top: 20px;
+    }
+    article {
+        grid-area: content;
+        padding-left: 1%;
+        padding-right: 4%;
+    }
+    aside {
+        grid-area: sidebar;
+        padding-left: 10%;
+        overflow-y: auto;
+    }
+    footer {
+        padding: 20px;
+        grid-area: footer;
+        background-color: none;
+    }
+    .wrapper {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr 3fr;
+        grid-template-areas: 
+        "header  header"
+        "sidebar content"
+        "footer  footer";
+    }
+    
+    @media screen and (max-width: 900px) {
+        .wrapper {
+        grid-template-columns: 4fr;
+        grid-template-areas:
+            "header"
+            "content"
+            "sidebar"
+            "footer";
+        }
+
+        article {
+            padding-inline: 3%;
+        }
+        aside {
+            padding-inline: 3%;
+          }
+    }
+
+    .userinfo-bg {
+        padding-inline: 10%;
+        height : auto;
+        margin-bottom: 0px;
+        margin-inline-end: 20px;
+        display: flex;
+        flex-direction: row;
+        display: block;
+    }
+
+    .no-bg-btn {
+        border: none;
+        background-color: white;
+        color: rgb(127, 127, 127);
+        width: 100%;
+        border-radius: 20px;
+        height:40px;
+        transition: 0.0s ease-in-out; 
+        text-align: center;
+    }
+
+    .no-bg-btn:hover {
+        background-color: #e0e0e0;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-sidebar {
+        background-color: white;
+        border-radius: 20px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+</style>
+{% endblock %}
+{% block title%} Home {% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    {% block header2 %}
+    {% endblock %}
+
+
+
+    <article>
+        {% block userpagecheck %}
+        {% endblock%}
+        {% for post in posts %}
+        <div class="text-body-secondary container-flex">
+            <div class="post-bg">
+                <div class="row colstyle">
+                    <div class="col-10 colstyle">
+                        <div>
+                        <p class="title">
+                            <span style="color: black;"><b>{{ post.title }}</b> </span>
+                            <span class="text-secondary"></span> · <a href="/{{ post.user.username }}" style="text-decoration: none; color: rgb(0, 149, 255)">{{post.user.username}}</a> · {{post.date_created}}</span></p>
+                        </div>
+                    </div>
+                    <div class="col-2 colstyle" style="text-align: right;">
+                        {% if user.id == post.user.id or user.id == 1: %}
+                        <div class="btn-group">
+                            <button type="button" class=" btn btn-outline-secondary delete-button dropdown-toggle" data-bs-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/delete-post/{{post.id}}" class="dropdown-item text-danger">Are you sure you want to delete the post?</a></li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="title">{{ post.content }}</p>
+    
+                <div style="text-align: right">
+                    {{ post.likes | length }}
+                    
+                    <a href="/like-post/{{ post.id }}"  class="icons">
+                        {% if not user.id in post.likes|map(attribute = "user_of_like")|list %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            </svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                        {% endif %}
+                    </a>
+    
+                    {{ post.dislikes | length }}
+                    <a href="/dislike-post/{{ post.id }}" class="icons">
+                        {% if not user.id in post.dislikes|map(attribute = "user_of_dislike")|list %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heartbreak-fill" viewBox="0 0 16 16">
+                            <path d="M8.867 14.41c13.308-9.322 4.79-16.563.064-13.824L7 3l1.5 4-2 3L8 15a38.094 38.094 0 0 0 .867-.59Zm-.303-1.01-.971-3.237 1.74-2.608a1 1 0 0 0 .103-.906l-1.3-3.468 1.45-1.813c1.861-.948 4.446.002 5.197 2.11.691 1.94-.055 5.521-6.219 9.922Zm-1.25 1.137a36.027 36.027 0 0 1-1.522-1.116C-5.077 4.97 1.842-1.472 6.454.293c.314.12.618.279.904.477L5.5 3 7 7l-1.5 3 1.815 4.537Zm-2.3-3.06-.442-1.106a1 1 0 0 1 .034-.818l1.305-2.61L4.564 3.35a1 1 0 0 1 .168-.991l1.032-1.24c-1.688-.449-3.7.398-4.456 2.128-.711 1.627-.413 4.55 3.706 8.229Z"/>
+                        </svg>
+                        {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heartbreak" viewBox="0 0 16 16">
+                            <path d="M8.931.586 7 3l1.5 4-2 3L8 15C22.534 5.396 13.757-2.21 8.931.586ZM7.358.77 5.5 3 7 7l-1.5 3 1.815 4.537C-6.533 4.96 2.685-2.467 7.358.77Z"/>
+                        </svg>
+                        {% endif %}
+                    </a>
+    
+    
+                    {{ post.comments | length}}
+                    <a href="/comments/{{ post.id }}" class="icons">
+                    {% if not user.id in post.comments|map(attribute = "user_of_comment")|list %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        </svg>
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-fill" viewBox="0 0 16 16">
+                            <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        </svg>
+                    {% endif %}
+                    </a>
+                </div>
+    
+            </div>
+        </div>
+    {% endfor%}
+    
+    {% for comment in comments %}
+            {{comment.content}}
+        {% endfor %}
+    </article> 
+
+
+
+    <aside>
+        <div class="post-sidebar" style="align-items: center; justify-content: center;">
+            <a href="/home"><button class="no-bg-btn"> Home </button>
+            <a href="/{{ user.username }}"><button class="no-bg-btn"> User profile </button>
+            <a href="/create-post"><button class="no-bg-btn"> New Post </button></a>
+            <a href="#"><button class="no-bg-btn"> Followers </button></a>
+        </div>
+        
+        {% if not user.followed.count() == 0 %}
+        <div class="post-sidebar" style="align-items: center; justify-content: center; padding-top:10px">
+            <p class="" style="text-align:center; margin-bottom:5%">Following [{{ user.followed.all() | length}}]</p>
+            {% for followed in user.followed | reverse %}
+            <a href="{{ followed.username }}"><button class="no-bg-btn"> {{ followed.username }} </button></a>
+            {% endfor %}
+        </div>
+        {% endif%}
+    </aside>
+
+
+
+
+    <footer><p class="text-secondary" style="text-align: center;">All rights reserved.®</p></footer>
+  </div>
+
+{% endblock%}

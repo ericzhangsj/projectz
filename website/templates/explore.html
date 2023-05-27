@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title%} Explore {% endblock %}
+{% block content %}
+<div align="center" style="background-color: rgb(255, 255, 255); padding:5%"">
+    <h1 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Welcome back, <b>{{ user.username }}</b>!</h1>
+</div>
+<div style="background-color: aliceblue; padding: 5%;">
+    <div class="card" style="width: 18rem;">
+    <img src="{{ url_for('static', filename='/images/terry.jpg') }}" class="card-img-top" alt="Placeholder text">
+    <div class="card-body">
+      <h5 class="card-title">Testing!</h5>
+      <p class="card-text">
+        Hello! I am testing out the new feature! It is so cool!
+      </p>
+      <a href="#" class="btn btn-primary" >I approve!</a>
+
+</div>
+{% endblock%}

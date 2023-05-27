@@ -1,0 +1,133 @@
+{% extends 'posts_template.html' %}
+{% block title %} Comments {% endblock %}
+{% block content %}
+<br/>
+<div class="container text-body-secondary container-flex">
+    <div class="post-bg">
+        <div class="row colstyle">
+            <div class="col-10 colstyle">
+                <div>
+                <p class="title">
+                    <span style="color: black;"><b>{{ post.title }}</b> </span>
+                    <span class="text-secondary"></span> · <a href="/{{ post.user.username }}" style="text-decoration: none; color: rgb(10, 77, 125)">{{ post.user.username }}</a> · {{ post.date_created }}</span></p>
+                </div>
+            </div>
+            <div class="col-2 colstyle" style="text-align: right;">
+                {% if user.id == post.user.id: %}
+                <div class="btn-group">
+                    <button type="button" class=" btn btn-outline-secondary delete-button dropdown-toggle" data-bs-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/delete-post/{{post.id}}" class="dropdown-item text-danger">Are you sure you want to delete the post?</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <p class="title">{{ post.content }}</p>
+
+        <div style="text-align: right">
+            {{ post.likes | length }}
+                
+                <a href="/like-post/{{ post.id }}"  class="icons">
+                    {% if not user.id in post.likes|map(attribute = "user_of_like")|list %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                    {% endif %}
+                </a>
+
+                {{ post.dislikes | length }}
+                <a href="/dislike-post/{{ post.id }}" class="icons">
+                    {% if not user.id in post.dislikes|map(attribute = "user_of_dislike")|list %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heartbreak-fill" viewBox="0 0 16 16">
+                        <path d="M8.867 14.41c13.308-9.322 4.79-16.563.064-13.824L7 3l1.5 4-2 3L8 15a38.094 38.094 0 0 0 .867-.59Zm-.303-1.01-.971-3.237 1.74-2.608a1 1 0 0 0 .103-.906l-1.3-3.468 1.45-1.813c1.861-.948 4.446.002 5.197 2.11.691 1.94-.055 5.521-6.219 9.922Zm-1.25 1.137a36.027 36.027 0 0 1-1.522-1.116C-5.077 4.97 1.842-1.472 6.454.293c.314.12.618.279.904.477L5.5 3 7 7l-1.5 3 1.815 4.537Zm-2.3-3.06-.442-1.106a1 1 0 0 1 .034-.818l1.305-2.61L4.564 3.35a1 1 0 0 1 .168-.991l1.032-1.24c-1.688-.449-3.7.398-4.456 2.128-.711 1.627-.413 4.55 3.706 8.229Z"/>
+                    </svg>
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heartbreak" viewBox="0 0 16 16">
+                        <path d="M8.931.586 7 3l1.5 4-2 3L8 15C22.534 5.396 13.757-2.21 8.931.586ZM7.358.77 5.5 3 7 7l-1.5 3 1.815 4.537C-6.533 4.96 2.685-2.467 7.358.77Z"/>
+                    </svg>
+                    {% endif %}
+                </a>
+        </div>
+
+    </div>
+</div>
+    
+<div class="container text-body-secondary container-flex">
+    <div class="post-bg">
+        <h3 class="text-secondary" style="margin-bottom: 2%;">Comments [{{ post.comments | length }}]</h3>
+        
+        <form method="POST">
+            <div type="form-floating">
+                <div class="row">
+                    <div class="col-10" style="text-align:left;">
+                        <textarea maxlength="120" placeholder="What do you think?" id="my-textarea" class="comments-input form-control"" name="content"></textarea>
+                    </div>
+                    <div class="col-2" style="text-align:right;">
+                        <button class="btn btn-primary" type="submit" style="border-radius: 40px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <br/>
+
+
+
+
+    {% for comment in post.comments | reverse %}
+    <hr class="my-2" style="padding-bottom:10px;">
+        <div class="row colstyle">
+            <div class="col-10 colstyle">
+                <div>
+                <p class="title">
+                    <span class="text-secondary"></span><a href="{{ comment.user.username }}" style="text-decoration: none; color: rgb(10, 77, 125)">{{comment.user.username}}</a> · {{comment.date_created}}</span></p>
+                </div>
+            </div>
+            <div class="col-2 colstyle" style="text-align: right;">
+                {% if user.id == comment.user.id or user.id == post.user.id or user.id == 1: %}
+                <div class="btn-group">
+                    <button type="button" class=" btn btn-outline-secondary delete-button dropdown-toggle" data-bs-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/delete-comment/{{ comment.id }}" class="dropdown-item text-danger">Are you sure you want to delete the comment?</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <p class="title">{{ comment.content }}</p>
+
+        <div style="text-align: right">
+            {{ comment.likes | length }}
+            <a href="/like-comment/{{ comment.id }}"  class="icons">
+                {% if not user.id in comment.likes|map(attribute = "user_of_like")|list %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                    </svg>
+                {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg>
+                {% endif %}
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+</div> 
+{% endblock %}

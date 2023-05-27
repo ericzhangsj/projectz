@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+<style>
+
+
+  body {
+    background-image: url('{{ url_for("static", filename="images/background.png") }}');
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+{% endblock %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+
+<div class="background-image"></div>
+
+<form method = 'POST'>
+    <div class="modal modal-sheet position-static d-block bg-body-s p-4 py-md-3" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-3 border-bottom-0">
+          <h1 style="text-align: center">Join the community!</h1>
+        </div>
+        <div class="modal-body p-5 pt-0">
+            <medium class="text-body-secondary">Sign up and make posts about your interests!</medium>
+            <br /><br /><br />
+          <form class="">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control rounded-3" id="username" placeholder="John Apple" name="username">
+              <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control rounded-3" id="password" placeholder="Password" name="password">
+              <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control rounded-3" id="passwordConfirm" placeholder="Confirm Password" name="passwordConfirm">
+                <label for="floatingPassword">Re-enter Password</label>
+              </div>
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
+            <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use. 
+                    <br/>(There are no terms of use)</small>
+            <hr class="my-4">
+          </form>
+        </div>
+      </div>
+    </div>
+</form>
+{% endblock %}
