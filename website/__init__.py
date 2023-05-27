@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+import git
 
 db = SQLAlchemy()
 DB_NAME = 'database.db'
@@ -10,6 +11,15 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'a'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+
+    @app.route('/git_update', methods=['POST'])
+    def git_update():
+        repo = git.Repo('./projectz')
+        origin = repo.remotes.origin
+        repo.create_head('main', 
+        origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+        origin.pull()
+        return '', 200
 
     db.init_app(app)
 
